@@ -35,11 +35,8 @@ class UserController extends UserBaseController
 
     public function infoWithCache()
     {
-        echo 3;
         $cacheUserInfo = Redis::get('uid:'.$this->uid);
-        echo 4;
         if (!$cacheUserInfo) {
-            echo 343;
             $user = User::where('id', 1)->first();
             if (!$user) {
                 throw new ApiException(ApiErrDesc::ERR_USER_NOT_EXIST);
