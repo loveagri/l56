@@ -29,7 +29,7 @@ class JwtMiddleware
             if ($jwtAuth->validate() && $jwtAuth->verify()) {
                 return $next($request);
             } else {
-                return $this->jsonData(ApiErrDesc::ERR_PASSWORD[0], ApiErrDesc::ERR_PASSWORD[1]);
+                throw  new ApiException(ApiErrDesc::ERR_TOKEN);
             }
         } else {
             throw  new ApiException(ApiErrDesc::ERR_PARAMS);
