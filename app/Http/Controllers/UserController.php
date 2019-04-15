@@ -7,9 +7,9 @@ use App\Common\Err\ApiErrDesc;
 use App\Exceptions\ApiException;
 use App\Http\Response\ResponseJson;
 use App\User;
-use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Redis;
 
-class UserController extends BaseController
+class UserController extends UserBaseController
 {
 
     use ResponseJson;
@@ -19,9 +19,9 @@ class UserController extends BaseController
         $jwtAuth = JwtAuth::getInstance();
         $uid = $jwtAuth->getUid();
 
-        $user= User::where('id',$uid)->first();
+        $user = User::where('id', $uid)->first();
 
-        if (!$user){
+        if (!$user) {
             throw new ApiException(ApiErrDesc::ERR_USER_NOT_EXIST);
         }
 
@@ -32,4 +32,49 @@ class UserController extends BaseController
             ]
         );
     }
+
+    public function infoWithCache()
+    {
+        $cacheUserInfo = Redis::get('uid:'.$this->uid);
+        if (!$cacheUserInfo) {
+            $user = User::where('uid', $this->uid)->first();
+            if (!$user) {
+                throw new ApiException(ApiErrDesc::ERR_USER_NOT_EXIST);
+            }
+
+            Redis::setex('uid:'.$this->uid, 3600, json_encode($user->toArray()));
+
+
+        } else {
+            $user = json_decode($cacheUserInfo);
+        }
+
+        return $this->jsonSuccessData(
+            [
+                'name' => $user->name,
+                'email' => $user->email,
+            ]
+        );
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
