@@ -58,6 +58,11 @@ class JwtAuth
         return $this;
     }
 
+    public function getUid()
+    {
+        return $this->uid;
+    }
+
     public function setUid($uid)
     {
         $this->uid = $uid;

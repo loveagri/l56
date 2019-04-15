@@ -58,7 +58,7 @@ Route::middleware(['jwt_auth'])->group(
     }
 );
 
-//Route::get('/user/info','UserController@info');
+
 
 
 

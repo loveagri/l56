@@ -25,25 +25,24 @@ class JwtLoginController extends BaseController
 
         if (!$re) {
             throw new ApiException(ApiErrDesc::ERR_USER_NOT_EXIST);
-        } else {
-            $userPasswordHash = $re['password'];
-
-            if (password_verify($password, $userPasswordHash)) {
-                throw new ApiException(ApiErrDesc::ERR_PASSWORD);
-            } else {
-                $jwtAuth = JwtAuth::getInstance();
-                $token = $jwtAuth->setUid(1)->encode()->getToken();
-
-                return $this->jsonSuccessData(
-                    [
-                        'token' => $token,
-                        'name' => $re['name'],
-                        'email' => $re['email'],
-                    ]
-                );
-            }
         }
 
 
+        $userPasswordHash = $re['password'];
+        if (!password_verify($password, $userPasswordHash)) {
+            throw new ApiException(ApiErrDesc::ERR_PASSWORD);
+        }
+
+        $jwtAuth = JwtAuth::getInstance();
+        $token = $jwtAuth->setUid($re['id'])->encode()->getToken();
+
+        return $this->jsonSuccessData(
+            [
+                'token' => $token,
+                'name' => $re['name'],
+                'email' => $re['email'],
+                'res' => $re,
+            ]
+        );
     }
 }
