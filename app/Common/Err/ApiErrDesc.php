@@ -19,4 +19,5 @@ class ApiErrDesc
 
     const ERR_PASSWORD = [1000, '密码错误'];
     const ERR_TOKEN = [1002, '登录过期'];
+    const ERR_USER_NOT_EXIST = [1003, '用户名不存在'];
 }
