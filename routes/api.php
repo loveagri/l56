@@ -55,6 +55,7 @@ Route::get(
 Route::middleware(['jwt_auth'])->group(
     function () {
         Route::get('/user/info', 'UserController@info');
+        Route::get('/user/infoWithCache', 'UserController@infoWithCache');
     }
 );
 

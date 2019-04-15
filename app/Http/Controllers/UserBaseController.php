@@ -13,6 +13,8 @@ class UserBaseController extends BaseController
 
     public function __construct()
     {
-        $this->uid = JwtAuth::getInstance()->getUid();
+        $jwtAuth = JwtAuth::getInstance();
+        $this->uid = $jwtAuth->getUid();
+
     }
 }
