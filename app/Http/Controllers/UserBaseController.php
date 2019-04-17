@@ -13,9 +13,12 @@ class UserBaseController extends BaseController
 
     public function __construct()
     {
-        print_r(request()->input('token'));
-        print_r(JwtAuth::getInstance());exit;
-        $this->uid = JwtAuth::getInstance()->getUid();
+       $token = $request->header('token');
 
-    }
+       if ($token)
+       {
+           $this->uid = JwtAuth::getInstance()->decode()->getUid();
+       }
+
+   }
 }

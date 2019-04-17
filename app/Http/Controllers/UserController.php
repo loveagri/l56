@@ -16,6 +16,7 @@ class UserController extends UserBaseController
 
     public function info()
     {
+        echo "string";exit;
         $user = User::where('id', $this->uid)->first();
 
         if (!$user) {

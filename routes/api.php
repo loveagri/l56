@@ -46,7 +46,7 @@ Route::post(
 );
 
 
-Route::get(
+Route::post(
     '/user/login',
     'JwtLoginController@login'
 );
@@ -54,8 +54,8 @@ Route::get(
 
 Route::middleware(['jwt_auth'])->group(
     function () {
-        Route::get('/user/info', 'UserController@info');
-        Route::get('/user/infoWithCache', 'UserController@infoWithCache');
+        Route::post('/user/info', 'UserController@info');
+        Route::post('/user/infoWithCache', 'UserController@infoWithCache');
     }
 );
 
