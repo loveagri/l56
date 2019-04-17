@@ -50,14 +50,14 @@ Route::post(
     '/user/login',
     'JwtLoginController@login'
 );
+Route::post('/user/info', 'UserController@info');
 
-
-Route::middleware(['jwt_auth'])->group(
-    function () {
-        Route::post('/user/info', 'UserController@info');
-        Route::post('/user/infoWithCache', 'UserController@infoWithCache');
-    }
-);
+// Route::middleware(['jwt_auth'])->group(
+//     function () {
+//         Route::post('/user/info', 'UserController@info');
+//         Route::post('/user/infoWithCache', 'UserController@infoWithCache');
+//     }
+// );
 
 
 

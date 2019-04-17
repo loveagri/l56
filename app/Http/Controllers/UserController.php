@@ -16,7 +16,6 @@ class UserController extends UserBaseController
 
     public function info()
     {
-        echo "string";exit;
         $user = User::where('id', $this->uid)->first();
 
         if (!$user) {
@@ -31,27 +30,43 @@ class UserController extends UserBaseController
         );
     }
 
-    public function infoWithCache()
-    {
-//        $cacheUserInfo = Redis::get('uid:'.$this->uid);
-//        if (!$cacheUserInfo) {
-            $user = User::where('id', $this->uid)->first();
-            if (!$user) {
-                throw new ApiException(ApiErrDesc::ERR_USER_NOT_EXIST);
-            }
 
-            Redis::setex('uid:'.$this->uid, 3600, json_encode($user->toArray()));
-//        } else {
-//            $user = json_decode($cacheUserInfo);
-//        }
 
-        return $this->jsonSuccessData(
-            [
-                'name' => $user->name,
-                'email' => $user->email,
-            ]
-        );
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//     public function infoWithCache()
+//     {
+// //        $cacheUserInfo = Redis::get('uid:'.$this->uid);
+// //        if (!$cacheUserInfo) {
+//             $user = User::where('id', $this->uid)->first();
+//             if (!$user) {
+//                 throw new ApiException(ApiErrDesc::ERR_USER_NOT_EXIST);
+//             }
+
+//             Redis::setex('uid:'.$this->uid, 3600, json_encode($user->toArray()));
+// //        } else {
+// //            $user = json_decode($cacheUserInfo);
+// //        }
+
+//         return $this->jsonSuccessData(
+//             [
+//                 'name' => $user->name,
+//                 'email' => $user->email,
+//             ]
+//         );
+//     }
 }
 
 
